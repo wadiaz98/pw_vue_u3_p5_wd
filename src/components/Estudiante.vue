@@ -2,52 +2,62 @@
   <div class="container">
     <div class="consultar">
       <h2>Ingrese el id del estudiante</h2>
-      <input type="text" v-model="id" id="id" />
-      <button @click="consultarPorId">consultar</button>
+      <input type="text" v-model="id" id="id" placeholder="Ingrese ID" />
+      <button @click="consultarPorId">Consultar</button>
+      <button @click="eliminar">Eliminar</button>
       <div class="formularioConsultar">
         <form class="form">
           <h3>Estudiante:</h3>
-          <p type="Nombre:"><input v-model="nombre" type="text" /></p>
-          <p type="Apellido:"><input v-model="apellido" type="text" /></p>
-          <p type="Genero:"><input v-model="genero" type="text" /></p>
+          <p type="Nombre:">
+            <input v-model="nombre" type="text" placeholder="Nombre" />
+          </p>
+          <p type="Apellido:">
+            <input v-model="apellido" type="text" placeholder="Apellido" />
+          </p>
+          <p type="Genero:">
+            <input v-model="genero" type="text" placeholder="Genero" />
+          </p>
           <p type="Fecha de nacimiento:">
-            <input v-model="fechaNacimiento" type="text" />
+            <input
+              v-model="fechaNacimiento"
+              type="text"
+              placeholder="Fecha de nacimiento"
+            />
           </p>
-          <p type="Cedula:"><input v-model="cedula" type="text" /></p>
-          <p type="Edad:"><input v-model="edad" type="text" /></p>
+          <p type="Cedula:">
+            <input v-model="cedula" type="text" placeholder="Cedula" />
+          </p>
+          <p type="Edad:">
+            <input v-model="edad" type="text" placeholder="Edad" />
+          </p>
           <p type="Nacionalidad:">
-            <input v-model="nacionalidad" type="text" />
+            <input
+              v-model="nacionalidad"
+              type="text"
+              placeholder="Nacionalidad"
+            />
           </p>
-          <p type="Direccion:"><input v-model="direccion" type="text" /></p>
+          <p type="Direccion:">
+            <input v-model="direccion" type="text" placeholder="Direccion" />
+          </p>
           <p type="Estado civil:">
-            <input v-model="estadoCivil" type="text" />
+            <input
+              v-model="estadoCivil"
+              type="text"
+              placeholder="Estado civil"
+            />
           </p>
           <p type="Lugar de nacimiento:">
-            <input v-model="lugarNacimiento" type="text" />
+            <input
+              v-model="lugarNacimiento"
+              type="text"
+              placeholder="Lugar de nacimiento"
+            />
           </p>
+          <button @click="actualizar">Actualizar</button>
+          <button @click="insertar">Insertar</button>
         </form>
       </div>
-    </div>
-
-    <div class="formularioInsertar">
-      <form class="form">
-        <h2>Ingresar:</h2>
-        <p type="Nombre:"><input v-model="nombre" type="text" /></p>
-        <p type="Apellido:"><input v-model="apellido" type="text" /></p>
-        <p type="Genero:"><input v-model="genero" type="text" /></p>
-        <p type="Fecha de nacimiento:">
-          <input v-model="fechaNacimiento" type="datetime-local" />
-        </p>
-        <p type="Cedula:"><input v-model="cedula" type="text" /></p>
-        <p type="Edad:"><input v-model="edad" type="text" /></p>
-        <p type="Nacionalidad:"><input v-model="nacionalidad" type="text" /></p>
-        <p type="Direccion:"><input v-model="direccion" type="text" /></p>
-        <p type="Estado civil:"><input v-model="estadoCivil" type="text" /></p>
-        <p type="Lugar de nacimiento:">
-          <input v-model="lugarNacimiento" type="text" />
-        </p>
-        <button @click="insertar">Insertar</button>
-      </form>
     </div>
   </div>
 </template>
@@ -56,6 +66,8 @@
 import {
   consultarEstudianteFachada,
   insertarFachada,
+  actualizarFachada,
+  eliminarFachada,
 } from "../helpers/clienteEstudiante.js";
 export default {
   data() {
@@ -88,7 +100,6 @@ export default {
       this.direccion = data.direccion;
       this.estadoCivil = data.estadoCivil;
       this.lugarNacimiento = data.lugarNacimiento;
-      this.consultar = true;
     },
     async insertar() {
       const estuBody = {
@@ -104,7 +115,24 @@ export default {
         lugarNacimiento: this.lugarNacimiento,
       };
       await insertarFachada(estuBody);
-      console.log("Insercion exitosa")
+    },
+    async actualizar() {
+      const estuBody = {
+        nombre: this.nombre,
+        apellido: this.apellido,
+        genero: this.genero,
+        fechaNacimiento: this.fechaNacimiento,
+        cedula: this.cedula,
+        edad: this.edad,
+        nacionalidad: this.nacionalidad,
+        direccion: this.direccion,
+        estadoCivil: this.estadoCivil,
+        lugarNacimiento: this.lugarNacimiento,
+      };
+      await actualizarFachada(estuBody, this.id);
+    },
+    async eliminar() {
+      await eliminarFachada(this.id);
     },
   },
 };
@@ -167,8 +195,7 @@ button:hover {
   background-color: #d2d3d3;
 }
 
-#id{
+#id {
   text-align: center;
 }
-
 </style>
