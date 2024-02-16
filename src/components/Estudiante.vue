@@ -115,6 +115,7 @@ export default {
         lugarNacimiento: this.lugarNacimiento,
       };
       await insertarFachada(estuBody);
+      console.log("Se inserto ");
     },
     async actualizar() {
       const estuBody = {
@@ -130,9 +131,11 @@ export default {
         lugarNacimiento: this.lugarNacimiento,
       };
       await actualizarFachada(estuBody, this.id);
+      console.log("Se actualizo ");
     },
     async eliminar() {
       await eliminarFachada(this.id);
+      console.log("Se elimino ");
     },
   },
 };
